@@ -3,7 +3,7 @@
 - Using React with HTML/jsx, CSS, Bootstrap, JavaScript and consumtion of data from a ready-made REST-api to build a small web site.
 - Writing about the web technologies you use, as part of the content on the site.
 
-
+### ------ NEED to add smtg!!!
 
 Assignment:
 ==========

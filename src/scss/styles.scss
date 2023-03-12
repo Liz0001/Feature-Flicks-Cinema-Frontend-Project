@@ -1,0 +1,22 @@
+@import 'google-fonts';
+@import 'variable-overrides';
+@import 'bootstrap/scss/bootstrap';
+@import 'sticky-footer';
+
+///////////////////////////
+/// Logo
+.logo-text {
+  font-family: 'Limelight';
+  display: inline-block;
+  color: #F5F5F5;
+  font-size: 30px;
+  margin-top: 15px;
+  padding: 0px 0 0 15px;
+}
+
+img.logo {
+  // generated https: //codepen.io/sosuke/pen/Pjoqqp --- #F5F5F5
+  margin-bottom: 15px;
+  filter: invert(99%) sepia(37%) saturate(845%) hue-rotate(180deg) brightness(114%) contrast(92%);
+
+}
