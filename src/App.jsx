@@ -5,8 +5,8 @@ import Footer from "./parts/Footer"
 
 import StartPage from "./pages/StartPage"
 import Movies from "./pages/Movies"
+import MovieDetails from "./pages/MovieDetails"
 import Contact from "./pages/Contact"
-import Booking from "./pages/Booking"
 import Receipt from "./pages/Receipt"
 import Page404 from "./pages/Page404"
 
@@ -19,17 +19,19 @@ export default function App() {
     </header>
 
     <main>
-      <Routes>
-        <Route path="/" element={< StartPage />} />
-        <Route path="/Movies" element={< Movies />} />
-        <Route path="/Contact-Us" element={< Contact />} />
-        <Route path="/Booking" element={< Booking />} />
-        <Route path="/Your-Receipt" element={< Receipt />} />
-        <Route path="*" element={< Page404 />} />
-      </Routes>
+      <div className="container mt-4 mb-3">
+        <Routes>
+          <Route path="/" element={< StartPage />} />
+          <Route path="/movies" element={< Movies />} />
+          <Route path="/movie-details/:id" element={< MovieDetails />} />
+          <Route path="/contact-us" element={< Contact />} />
+          <Route path="/your-receipt" element={< Receipt />} />
+          <Route path="*" element={< Page404 />} />
+        </Routes>
+      </div>
     </main>
 
-    <footer className="container-fluid text-light bg-primary">
+    <footer className="container-fluid text-light bg-primary bg-gradient">
       <Footer />
     </footer>
   </>

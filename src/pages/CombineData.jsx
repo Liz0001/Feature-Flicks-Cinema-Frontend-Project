@@ -10,62 +10,69 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 
 
+export default function CombineData() {
 
-export default function Movies() {
-
+  // const [category, setCategory] = useState([])
   const [movies, setMovies] = useState([]);
   const [screenings, setScreenings] = useState([])
-  const [moviesByCategory, setMoviesByCategory] = useState([])
-  const [movieCategories, setMovieCategories] = useState([])
+  const [moviesCategories, setMoviesCategories] = useState([])
 
   useEffect(() => {
     (async () => {
       setMovies(await (await (fetch("/api/movies"))).json())
-    })();
-  }, []);
-
-  useEffect(() => {
-    (async () => {
       setScreenings(await (await (fetch("/api/screenings"))).json())
-    })();
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      setMoviesByCategory(await (await (fetch("/api/movies_by_category"))).json())
-    })();
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      setMovieCategories(await (await (fetch("/api/categories"))).json())
+      // setMoviesCategories(await (await (fetch("/api/moviesXcategories"))).json())
     })();
   }, []);
 
 
 
+  function combineScreeningsAndMovies() {
+    let moviesAndScreenings = []
 
-  const handleCategoryChange = (event) => {
+    screenings.forEach(({ id, time, movieId, auditoriumId }) => {
+      moviesAndScreenings.push({
+        "screeningId": id,
+        "screeningDay": getMovDay(time),
+        "screeningDate": getMovDate(time),
+        "screeningHrs": getMovHours(time),
+        "screeningMins": getMovMins(time),
+        "auditoriumId": auditoriumId,
+        "movieId": movieId,
+        "movieTitle": getTitle(movieId),
+        "duration": getDuration(movieId),
+        "poster": getImage(movieId),
+        "categories": getCategorie(movieId)
+      })
+    })
 
-    // setMovieCategories(event.target.value)
-    console.log(event.target.value)
-    // setCategory(category === "All Categories" ? category : category.toLowerCase());
-  };
-
-
-  //////////////////////////////
-  // Categories
-
-  function getAllCategories() {
-    let allCat = movieCategories.map(cat => cat.title)
-    allCat.sort()
-    allCat.unshift("All Categories");
-    return allCat
+    return moviesAndScreenings
   }
 
-  //////////////////////////////
-  // getting card info
 
+  // useEffect(() => {
+  //   setMovieData(combineScreeningsAndMovies());
+  // }, []);
+
+
+  // console.log(movieData)
+
+
+
+  // const displayMovies = screenings.filter((item) => {
+  //   const movieCategory = getCategorie(item.movieId).toLowerCase();
+  //   return category === "All Categories" || movieCategory.includes(category);
+  // });
+  // // console.log(m)
+  // const handleCategoryChange = (event) => {
+  //   const category = event.target.value;
+  //   setCategory(category === "All Categories" ? category : category.toLowerCase());
+
+  //   console.log(event.target.value)
+
+  // };
+  //////////////////////////////
+  // setting card info
   function getDuration(movieId) {
     let time = movies.filter(movie => movie.id === movieId).map(mov => mov.description.length)
     let hours = (time / 60);
@@ -102,39 +109,25 @@ export default function Movies() {
   function getCategorie(movieId) {
     let categories = movies.filter(movie => movie.id === movieId)
       .map(mov => mov.description.categories)
+
     return categories[0].join(", ")
   }
 
+  function getAllCategories() {
+    let categories = []
+    let allSingleCategories = []
+    let allCat = movies.map(movie => movie.description.categories)
+    allCat.forEach(categories => categories.forEach(cat => allSingleCategories.push(cat)))
+    categories = [...new Set(allSingleCategories)]
+    categories.sort()
+    categories.unshift("All Categories");
+    return categories
+  }
 
-  // screenings.filter((item) => {
-  //   console.log(item.movieId)
-  // })
 
-  // movies.filter(movie => movie.id === movieId).map(mov => mov.description.categories
-  // category === "All Categories" || item.movieId === movie
-  // //   getCategorie(item.movieId).toLowerCase();
-  // //   category === "All Categories" || movieCategory.includes(category);
-  // // }))
-
-
-
-  // console.log(movieCategories)
-
-  // const displayMovies = screenings.filter((item) => {
-  //   const movieCategory = getCategorie(item.movieId).toLowerCase();
-  //   return category === "All Categories" || movieCategory.includes(category);
-  // });
-  // console.log(m)
-
-  // screenings.map(mov => mov.movieId.map(id => movies.id) )
-
-  // === "All Categrories"
-  // || scrItem.movieId === moviesXcategories.movieId && moviesXcategories.categoryID === movieCategories.id && movieCategories.title === movieCategories))
-
-  //////////////////////////////
-  // movies and category filter
 
   return <>
+
     <h2 className="p2 mb-3">Movies In Cinema Now</h2>
 
     <Container className="mb-4">
@@ -152,28 +145,30 @@ export default function Movies() {
     </Container>
 
 
-    {screenings.map(({ id, movieId, time }) =>
 
-      <NavLink key={id} to={'/movie-details/' + id}>
+    {movieData.map(({ movieId, movieId, poster, screeningDay, screeningDate, screeningHrs,
+      screeningMins, categories, movieTitle, duration }) =>
+
+      <NavLink key={movieId} to={'/movie-details/' + movieId}>
         <Container>
-          <Card className="movCard mb-3">
+          <Card className=" movCard mb-3">
             <Row >
               <Col className="cardImageCol" sm={4}>
-                <Card.Img className="img-card" variant="top" src={getImage(movieId)} />
+                <Card.Img className="img-card" variant="top" src={poster} />
               </Col>
 
               <Col sm={8}>
                 <Card.Body className="body-card">
 
                   <Card.Text>
-                    {getMovDay(time)}, {getMovDate(time)} at {getMovHours(time)}:{getMovMins(time)}
+                    {screeningDay}, {screeningDate} at {screeningHrs}:{screeningMins}
                   </Card.Text>
 
-                  <Card.Text>{getCategorie(movieId)}</Card.Text>
+                  <Card.Text>{categories}</Card.Text>
 
-                  <Card.Title>{getTitle(movieId)}</Card.Title>
+                  <Card.Title>{movieTitle}</Card.Title>
 
-                  <Card.Text>Duration: {getDuration(movieId)}</Card.Text>
+                  <Card.Text>Duration: {duration}</Card.Text>
 
                   <Card.Text>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut labore nam necessitatibus doloribus culpa voluptas deserunt tempore laborum facere quam!</Card.Text>
 
