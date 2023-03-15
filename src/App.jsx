@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom"
 
-import MainMenu from "./parts/MainMenu"
-import Footer from "./parts/Footer"
+import MainMenu from "./components/MainMenu"
+import Footer from "./components/Footer"
 
 import StartPage from "./pages/StartPage"
 import Movies from "./pages/Movies"

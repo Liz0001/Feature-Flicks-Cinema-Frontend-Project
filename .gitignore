@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+/////
+src/components/CardPoster.jsx
+src/components/CategoryFilter.jsx
+

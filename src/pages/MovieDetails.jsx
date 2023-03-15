@@ -3,10 +3,16 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 
 
-export default function MovieDetails() {
+export default function MovieDetails(props) {
+  console.log("props", props)
+  // const { movieId } = props
+  const { id } = useParams()
+  const showTime = id.split("-")[0]
+  const movId = id.split("-")[1]
+  console.log("Moviedetails ScreeningID", showTime, "MovieId", movId)
+  // console.log("movieId", movieId)
 
-  const { id } = useParams();
-  console.log(id)
+
 
 
   // useEffect(() => {
