@@ -16,7 +16,7 @@ export default function Movies() {
   const [screenings, setScreenings] = useState([])
   const [movies, setMovies] = useState([])
   const [movieCategories, setMovieCategories] = useState([])
-  let catFilter = "All Categories"
+  const [catFilter, setCatFilter] = useState("All Categories")
 
   useEffect(() => {
     // Fetch screenings and movies data
@@ -50,14 +50,10 @@ export default function Movies() {
 
 
 
-
   const handleCategoryChange = (event) => {
-    // setMovieCategories(event.target.value)
-    catFilter = event.target.value
+    setCatFilter(event.target.value)
     console.log(event.target.value)
-    // setCategory(category === "All Categories" ? category : category.toLowerCase());
   };
-
 
   //////////////////////////////
   // Categories
@@ -96,10 +92,6 @@ export default function Movies() {
     return new Date(time).getMinutes().toString().padStart(2, '0')
   }
 
-
-  // console.log(screenings.filter(({ categories }) => (
-  //   catFilter === "All Categories" || categories.includes(catFilter)
-  // )))
 
 
   //////////////////////////////
