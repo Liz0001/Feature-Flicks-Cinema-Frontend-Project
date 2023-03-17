@@ -9,9 +9,14 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 
+import { useStates } from '../utilities/states'
+import { kebabify } from '../utilities/kebabify'
+
 
 
 export default function Movies() {
+
+
 
   const [screenings, setScreenings] = useState([])
   const [movies, setMovies] = useState([])
@@ -33,7 +38,8 @@ export default function Movies() {
           movieTitle: movie.title,
           movieDuration: movie.description.length,
           moviePoster: movie.description.posterImage,
-          categories: movie.description.categories
+          categories: movie.description.categories,
+          slug: kebabify(movie.title)
         }
       })
       setScreenings(combinedData)
@@ -41,7 +47,7 @@ export default function Movies() {
     })
   }, [])
 
-
+  // 
   useEffect(() => {
     (async () => {
       setMovieCategories(await (await (fetch("/api/categories"))).json())
@@ -52,7 +58,7 @@ export default function Movies() {
 
   const handleCategoryChange = (event) => {
     setCatFilter(event.target.value)
-    console.log(event.target.value)
+    // console.log(event.target.value)
   };
 
   //////////////////////////////
@@ -74,22 +80,6 @@ export default function Movies() {
     let minutes = (hours - rhours) * 60;
     let rminutes = Math.round(minutes);
     return rhours + "h " + rminutes + "m."
-  }
-
-  function getMovDay(time) {
-    return new Date(time).toLocaleString('default', { weekday: 'long' })
-  }
-
-  function getMovDate(time) {
-    return new Date(time).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
-  }
-
-  function getMovHours(time) {
-    return new Date(time).getHours()
-  }
-
-  function getMovMins(time) {
-    return new Date(time).getMinutes().toString().padStart(2, '0')
   }
 
 
@@ -118,39 +108,46 @@ export default function Movies() {
     {/* Card component */}
     {screenings.filter(({ categories }) => (
       catFilter === "All Categories" || categories.includes(catFilter)
-    ))
-      .map(({ id, movieId, time, movieTitle, movieDuration, categories, moviePoster }) =>
-        <NavLink key={id} to={'/movie-details/' + id + "-" + movieId}>
-          <Container>
-            <Card className="movCard mb-3">
-              <Row >
+    )).map(({ id, movieId, time, movieTitle, movieDuration, categories, moviePoster, slug }) =>
 
-                <Col className="cardImageCol" sm={4}>
-                  <Card.Img className="img-card" variant="top" src={"https://cinema-rest.nodehill.se/" + moviePoster} />
-                </Col>
+      <NavLink key={id} to={'/movie-details/' + slug} >
+        <Container>
+          <Card className="movCard mb-3">
+            <Row >
 
-                <Col sm={8}>
-                  <Card.Body className="body-card">
+              <Col className="cardImageCol" sm={4}>
+                <Card.Img className="img-card" variant="top" src={"https://cinema-rest.nodehill.se/" + moviePoster} />
+              </Col>
 
-                    <Card.Text>
-                      {getMovDay(time)}, {getMovDate(time)} at {getMovHours(time)}:{getMovMins(time)}
-                    </Card.Text>
+              <Col sm={8}>
+                <Card.Body className="body-card">
 
-                    <Card.Text>{categories.join(" / ")}</Card.Text>
+                  <Card.Text>
+                    {new Intl.DateTimeFormat('en-SE', {
+                      weekday: "long",
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                      hour: "numeric",
+                      minute: "numeric",
+                    }).format(new Date(time))}
+                  </Card.Text>
 
-                    <Card.Title>{movieTitle}</Card.Title>
+                  <Card.Text>{categories.join(" / ")}</Card.Text>
 
-                    <Card.Text>Duration: {getDuration(movieDuration)}</Card.Text>
+                  <Card.Title>{movieTitle}</Card.Title>
 
-                    <Card.Text>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut labore nam necessitatibus doloribus culpa voluptas deserunt tempore laborum facere quam!</Card.Text>
+                  <Card.Text>Duration: {getDuration(movieDuration)}</Card.Text>
 
-                    <Button variant="outline-primary">Book tickets now</Button>
-                  </Card.Body>
-                </Col>
-              </Row>
-            </Card>
-          </Container>
-        </NavLink>
-      )}
+                  <Card.Text>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut labore nam necessitatibus doloribus culpa voluptas deserunt tempore laborum facere quam!</Card.Text>
+
+                  <Button variant="outline-primary">Book tickets now</Button>
+                </Card.Body>
+              </Col>
+            </Row>
+          </Card>
+        </Container>
+      </NavLink>
+    )}
   </>
 }
