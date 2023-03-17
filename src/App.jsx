@@ -17,9 +17,12 @@ import { kebabify } from './utilities/kebabify'
 
 export default function App() {
 
+
+  ///////////////////////////////////
+  // Fetching COMBINED data: Screenings and movies
   const s = useStates('screenings', {
     screenings: []
-  });
+  })
 
   useEffect(() => {
     // Fetch screenings and movies data
@@ -44,6 +47,9 @@ export default function App() {
     })
   }, [])
 
+
+  ///////////////////////////////////
+  // Fetching COMBINED data: Screenings and movies
 
 
   return <>

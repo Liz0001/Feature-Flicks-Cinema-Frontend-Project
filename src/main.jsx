@@ -4,6 +4,8 @@ import { BrowserRouter } from "react-router-dom"
 
 import App from './App'
 import './scss/styles.scss'
+import './utilities/auto-key-lists'
+
 
 
 ReactDOM.createRoot(document.querySelector('#root')).render(

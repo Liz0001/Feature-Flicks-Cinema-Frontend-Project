@@ -1,6 +1,8 @@
 
 import { useState, useEffect } from "react"
 import { NavLink } from "react-router-dom"
+import { useStates } from '../utilities/states'
+import { getDuration } from "../utilities/duration"
 
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
@@ -9,8 +11,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 
-import { useStates } from '../utilities/states'
-
+// import CategoryFilter from '../components/CategoryFilter';
 
 
 export default function Movies() {
@@ -31,27 +32,16 @@ export default function Movies() {
     setCatFilter(event.target.value)
   }
 
+
   //////////////////////////////
   // Categories
 
   function getAllCategories() {
     let allCat = movieCategories.map(cat => cat.title)
     allCat.sort()
-    allCat.unshift("All Categories");
+    allCat.unshift("All Categories")
     return allCat
   }
-
-  //////////////////////////////
-  // getting card info
-
-  function getDuration(time) {
-    let hours = (time / 60);
-    let rhours = Math.floor(hours);
-    let minutes = (hours - rhours) * 60;
-    let rminutes = Math.round(minutes);
-    return rhours + "h " + rminutes + "m."
-  }
-
 
   //////////////////////////////
   // movies and category filter
@@ -60,6 +50,7 @@ export default function Movies() {
     <h2 className="p2 mb-3">Movies In Cinema Now</h2>
 
     {/* Filter Component */}
+    {/* <CategoryFilter /> */}
     <Container className="mb-4">
       <Row >
         <Col sm={4}>
@@ -84,10 +75,10 @@ export default function Movies() {
           <Card className="movCard mb-3">
             <Row >
 
-              <Col className="cardImageCol" sm={4}>
-                <Card.Img className="img-card" variant="top" src={"https://cinema-rest.nodehill.se/" + moviePoster} />
+              <Col className="cardImageCol" md={4}>
+                <Card.Img className="img-card" variant="top" src={"https://cinema-rest.nodehill.se/" + moviePoster} alt={movieTitle} />
               </Col>
-              <Col sm={8}>
+              <Col mds={8}>
 
                 <Card.Body className="body-card">
                   <Card.Text>

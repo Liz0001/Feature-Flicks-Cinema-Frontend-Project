@@ -3,6 +3,8 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'sticky-footer';
 
+
+
 ///////////////////////////
 /// Logo
 .logo-text {
@@ -23,23 +25,26 @@ img.logo {
 
 ///////////////////////////
 /// Movie Card
+.movCard .row {
+  margin: 0;
+  max-height: 400px;
+}
 
-img.img-card {
+// .detail-img-card,
+.img-card {
   width: 100%;
   height: 100%;
-  aspect-ratio: 11 / 16;
   object-fit: cover;
-  // transition: transform .2s;
+  aspect-ratio: 20 / 9;
+  border-radius: 5px;
 }
 
 .movCard {
-  // padding: 10px 0;
   background-color: rgba(103, 109, 85, 0.11);
   color: black;
   text-decoration: none;
   border: none;
   align-items: center;
-
 }
 
 p.card-tex,
@@ -50,21 +55,84 @@ p.card-tex,
 .cardImageCol {
   padding-left: 0;
   padding-right: 0;
-  max-height: 350px;
 }
-
-// img:hover {
-//   transform: scale(1.01);
-// }
 
 a {
   text-decoration: none;
 }
 
-// .row:nth-child(odd) {
-//   flex-direction: row-reverse;
-// }
+///////////////////////////
+/// Movie Card on movie details page
+.detail-img-card {
+  // max-height: 500px;
+  height: 100%;
+  width: 75%;
+  object-fit: cover;
+  aspect-ratio: 10 / 16;
+  align-items: center;
+}
 
-// .row:nth-child(even) {
-//   flex-direction:
+
+///////////////////////////
+/// seats
+
+
+.screening-and-seats {
+  text-align: center;
+}
+
+.seats {
+  text-align: center;
+  // margin-right: 7px;
+}
+
+.seats>.row {
+  display: inline-block;
+}
+
+
+.seats>.row>div {
+  // background-color: burlywood;
+  border: #72b457 1px solid;
+}
+
+.seats>.row>div {
+  background-color: white;
+  color: black;
+  float: right;
+  // text-align: center;
+  padding-top: 3px;
+  // padding-bottom: 3px;
+  // padding-right: 5px;
+  border-top-left-radius: 25%;
+  border-top-right-radius: 25%;
+  width: 50px;
+  height: 35px;
+  margin: 3px 2px;
+  cursor: pointer;
+  border-color: #72b457 1px solid;
+}
+
+.seats>.row>.selected {
+  background-color: #72b457;
+  color: white;
+  border: none;
+}
+
+.seats>.row>.occupied {
+  background-color: rgb(152, 28, 28);
+  color: white;
+  cursor: not-allowed;
+  border: none;
+}
+
+
+
+// .poster-screen {
+//   width: 350px;
+//   object-fit: cover;
+//   aspect-ratio: 20 / 9;
+//   border: 5px solid #fff;
+//   border-radius: 10px;
+//   margin-bottom: 20px;
 // }
