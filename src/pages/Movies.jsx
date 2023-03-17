@@ -10,44 +10,16 @@ import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 
 import { useStates } from '../utilities/states'
-import { kebabify } from '../utilities/kebabify'
 
 
 
 export default function Movies() {
 
+  const s = useStates("screenings")
 
-
-  const [screenings, setScreenings] = useState([])
-  const [movies, setMovies] = useState([])
   const [movieCategories, setMovieCategories] = useState([])
   const [catFilter, setCatFilter] = useState("All Categories")
 
-  useEffect(() => {
-    // Fetch screenings and movies data
-    const fetchScreenings = fetch('/api/screenings').then(res => res.json());
-    const fetchMovies = fetch('/api/movies').then(res => res.json());
-
-    // Combine screenings and movies data
-    Promise.all([fetchScreenings, fetchMovies]).then(data => {
-      const [screeningsData, moviesData] = data;
-      const combinedData = screeningsData.map(screening => {
-        const movie = moviesData.find(movie => movie.id === screening.movieId)
-        return {
-          ...screening,
-          movieTitle: movie.title,
-          movieDuration: movie.description.length,
-          moviePoster: movie.description.posterImage,
-          categories: movie.description.categories,
-          slug: kebabify(movie.title)
-        }
-      })
-      setScreenings(combinedData)
-      setMovies(moviesData)
-    })
-  }, [])
-
-  // 
   useEffect(() => {
     (async () => {
       setMovieCategories(await (await (fetch("/api/categories"))).json())
@@ -55,11 +27,9 @@ export default function Movies() {
   }, []);
 
 
-
   const handleCategoryChange = (event) => {
     setCatFilter(event.target.value)
-    // console.log(event.target.value)
-  };
+  }
 
   //////////////////////////////
   // Categories
@@ -83,14 +53,13 @@ export default function Movies() {
   }
 
 
-
   //////////////////////////////
   // movies and category filter
 
   return <>
     <h2 className="p2 mb-3">Movies In Cinema Now</h2>
 
-    {/* Filter Component    - Not working */}
+    {/* Filter Component */}
     <Container className="mb-4">
       <Row >
         <Col sm={4}>
@@ -106,11 +75,11 @@ export default function Movies() {
 
 
     {/* Card component */}
-    {screenings.filter(({ categories }) => (
+    {s.screenings.filter(({ categories }) => (
       catFilter === "All Categories" || categories.includes(catFilter)
     )).map(({ id, movieId, time, movieTitle, movieDuration, categories, moviePoster, slug }) =>
 
-      <NavLink key={id} to={'/movie-details/' + slug} >
+      <NavLink key={id} to={'/movie-details/' + slug + "/" + id} >
         <Container>
           <Card className="movCard mb-3">
             <Row >
@@ -118,10 +87,9 @@ export default function Movies() {
               <Col className="cardImageCol" sm={4}>
                 <Card.Img className="img-card" variant="top" src={"https://cinema-rest.nodehill.se/" + moviePoster} />
               </Col>
-
               <Col sm={8}>
-                <Card.Body className="body-card">
 
+                <Card.Body className="body-card">
                   <Card.Text>
                     {new Intl.DateTimeFormat('en-SE', {
                       weekday: "long",
@@ -132,17 +100,13 @@ export default function Movies() {
                       minute: "numeric",
                     }).format(new Date(time))}
                   </Card.Text>
-
                   <Card.Text>{categories.join(" / ")}</Card.Text>
-
                   <Card.Title>{movieTitle}</Card.Title>
-
                   <Card.Text>Duration: {getDuration(movieDuration)}</Card.Text>
-
                   <Card.Text>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut labore nam necessitatibus doloribus culpa voluptas deserunt tempore laborum facere quam!</Card.Text>
-
                   <Button variant="outline-primary">Book tickets now</Button>
                 </Card.Body>
+
               </Col>
             </Row>
           </Card>

@@ -1,32 +1,28 @@
 
-import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
-
-
-export default function MovieDetails(props) {
-  console.log("props", props)
-  // const { movieId } = props
-  const { id } = useParams()
-  const showTime = id.split("-")[0]
-  const movId = id.split("-")[1]
-  console.log("Moviedetails ScreeningID", showTime, "MovieId", movId)
-  // console.log("movieId", movieId)
+import { useParams } from 'react-router-dom'
+import { useStates } from '../utilities/states';
 
 
 
+export default function MovieDetails() {
 
-  // useEffect(() => {
-  //   movie.description.length = 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quam, corrupti assumenda facilis distinctio dicta fuga dignissimos cumque corporis autem iste. Temporibus aspernatur facere rem veritatis aut esse reprehenderit voluptas delectus asperiores? Harum assumenda id, consequuntur quibusdam voluptatem distinctio numquam et accusantium maxime aliquid aliquam ab ut voluptatibus nesciunt, minus corporis?!';
-  // }, []);
+  const { slug, id } = useParams();
 
-  // return <div className="movie-detail">
-  //   <h3>{title}</h3>
-  //   <h4>Length: {length} minutes</h4>
-  //   <h4>Categories: {categories.join(', ')}</h4>
-  //   <img src={'https://cinema-rest.nodehill.se' + posterImage} />
-  //   <hr />
-  // </div>
+  const s = useStates('screenings');
+
+  const screening = s.screenings.find(mov => mov.id == id)
+
+
+  if (!screening) {
+    return null
+  }
+  console.log(screening, id)
+
+
+
   return <>
-    <p>{id}</p>
+    <h1>Movie</h1>
+    <h3>{slug}</h3>
+    <p>{screening.title}</p>
   </>
 }
