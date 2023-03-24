@@ -127,12 +127,41 @@ a {
 }
 
 
+///////////////////////////
+/// ticket area buttons etc...
+.ticketArea button {
+  margin: 0 10px;
+}
 
-// .poster-screen {
-//   width: 350px;
-//   object-fit: cover;
-//   aspect-ratio: 20 / 9;
-//   border: 5px solid #fff;
-//   border-radius: 10px;
-//   margin-bottom: 20px;
-// }
+.ticketArea .priceArea {
+  margin-left: 15px;
+}
+
+.btnAreaAdult {
+  margin-left: 8px;
+}
+
+.btnAreaChild {
+  margin-left: 10px;
+}
+
+.printText {
+  // margin-top: -20px;
+  display: inline-block;
+  padding-right: 150px;
+}
+
+
+p.ticketArea:first-child,
+p.ticketArea:nth-child(4) {
+  // background: red;
+  margin-bottom: 0;
+}
+
+.line {
+  height: 1px;
+  width: 350px;
+  background-color: rgba(211, 211, 211, 0.473);
+  margin: 0 auto;
+  margin-bottom: 30px;
+}

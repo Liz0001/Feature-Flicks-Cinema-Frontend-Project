@@ -10,7 +10,7 @@ export default function HeaderMenu() {
     <Navbar className="mainNav bg-gradient" collapseOnSelect expand="lg" bg="primary" variant="dark">
       <Container>
         <Navbar.Brand as={NavLink} to="/" className="align-center">
-          <img className="logo" src="./logo.svg" />
+          <img className="logo" src="/logo.svg" />
           <p className="logo-text">Feature Flicks</p>
         </Navbar.Brand>
 

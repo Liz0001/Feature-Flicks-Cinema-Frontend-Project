@@ -2,6 +2,8 @@
 import { useParams } from 'react-router-dom'
 import { useStates } from '../utilities/states';
 import { getDuration } from "../utilities/duration"
+import { useEffect } from 'react'
+
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -9,6 +11,8 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card'
 
 import DisplaySeats from '../components/DisplaySeats'
+import ChooseTickets from '../components/ChooseTickets'
+
 
 
 export default function MovieDetails() {
@@ -19,7 +23,54 @@ export default function MovieDetails() {
   if (!screening) {
     return null
   }
-  // console.log("Screening data", screening)
+
+
+
+  /// fetch stuff here - so we can pass it around among components
+  const ms = useStates("oneMovie", {
+    movieScreening: null,
+    seats: [],
+    emptySeats: 0
+  });
+
+  useEffect(() => {
+    (async () => {
+      let movieScreening = (await (await fetch(
+        `/api/occupied_seats?screeningId=${screening.id}`))
+        .json())[0]
+
+      movieScreening.occupiedSeats = movieScreening
+        .occupiedSeats.split(', ')
+        .map(x => +x)
+
+      ms.movieScreening = movieScreening
+
+      // empty number of seats
+      ms.emptySeats = movieScreening.total - movieScreening.occupied
+      // console.log("Empty: ", ms.emptySeats, " total :", movieScreening.total, " occupied", movieScreening.occupied)
+
+      let seats = await (await fetch(
+        `/api/seats/?auditoriumId=${screening.auditoriumId}&sort=seatNumber`)).json()
+
+      let rows = [];
+      let row;
+      let latestRow;
+
+      for (let seat of seats) {
+        // Add a new property: Is the seat occupied? (true/false)
+        seat.occupied = movieScreening.occupiedSeats.includes(seat.seatNumber)
+        // Arrange seats into rows
+        if (latestRow !== seat.rowNumber) {
+          row = []
+          rows.push(row)
+        }
+        row.push(seat)
+        latestRow = seat.rowNumber
+      }
+      ms.seats = rows
+    })()
+  }, [])
+
 
 
 
@@ -44,10 +95,15 @@ export default function MovieDetails() {
           <Card.Img className="detail-img-card" variant="top" src={"https://cinema-rest.nodehill.se/" + screening.moviePoster} alt={screening.movieTitle} />
         </Col>
       </Row>
-      <Row>
+      <hr />
 
-        <h3 className="mt-4 mt-3 text-center">Choose your seats:</h3>
-        <DisplaySeats screeningId={screening.id} auditoriumId={screening.auditoriumId} />
+      <Row>
+        <ChooseTickets />
+      </Row>
+
+
+      <Row>
+        <DisplaySeats />
         {/* <Booking /> */}
       </Row>
     </Container>

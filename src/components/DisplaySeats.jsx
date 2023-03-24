@@ -1,50 +1,9 @@
 
 import { useStates } from '../utilities/states'
-import { useEffect } from 'react'
 
-export default function DisplaySeats({ screeningId, auditoriumId }) {
+export default function DisplaySeats() {
 
-  const ms = useStates({
-    movieScreening: null,
-    seats: []
-  });
-
-  useEffect(() => {
-    (async () => {
-
-      let movieScreening = (await (await fetch(
-        `/api/occupied_seats?screeningId=${screeningId}`))
-        .json())[0]
-
-      movieScreening.occupiedSeats = movieScreening
-        .occupiedSeats.split(', ')
-        .map(x => +x)
-
-      ms.movieScreening = movieScreening
-
-      let seats = await (await fetch(
-        `/api/seats/?auditoriumId=${auditoriumId}&sort=seatNumber`)).json()
-
-      let rows = [];
-      let row;
-      let latestRow;
-
-      for (let seat of seats) {
-        // Add a new property: Is the seat occupied? (true/false)
-        seat.occupied = movieScreening.occupiedSeats.includes(seat.seatNumber)
-        // Arrange seats into rows
-        if (latestRow !== seat.rowNumber) {
-          row = []
-          rows.push(row)
-        }
-        row.push(seat)
-        latestRow = seat.rowNumber
-      }
-
-      ms.seats = rows
-    })()
-  }, [])
-
+  const ms = useStates("oneMovie");
 
 
   function toggleSeatSelection(seat) {
@@ -53,6 +12,7 @@ export default function DisplaySeats({ screeningId, auditoriumId }) {
   }
 
   return <>
+    <h3 className="mt-4 mb-3 text-center">2. Choose your seats:</h3>
     <div className="seats">
       {ms.seats.map(row => <><div key={row} className="row">
         {row.map((seat) => <div key={seat.id} className={
@@ -63,7 +23,5 @@ export default function DisplaySeats({ screeningId, auditoriumId }) {
         </div>)}
       </div><br /></>)}
     </div>
-
   </>
-
 }
