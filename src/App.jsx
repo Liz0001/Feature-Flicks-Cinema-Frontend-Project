@@ -19,7 +19,7 @@ export default function App() {
 
 
   ///////////////////////////////////
-  // Fetching COMBINED data: Screenings and movies
+  // Fetching data: Screenings and movies AND combining them 
   const s = useStates('screenings', {
     screenings: []
   })
@@ -49,7 +49,37 @@ export default function App() {
 
 
   ///////////////////////////////////
-  // Fetching COMBINED data: Screenings and movies
+  // Fetching movie categories
+
+  const c = useStates('movieCategories', {
+    movieCategories: [],
+    catFilter: "All Categories"
+  })
+
+  useEffect(() => {
+    (async () => {
+      c.movieCategories = await (await fetch('/api/categories')).json();
+    })();
+  }, []);
+
+
+
+  ///////////////////////////////////
+  // Fetching tickets types
+
+  const t = useStates('tickets', {
+    tickets: []
+  })
+
+  useEffect(() => {
+    (async () => {
+      t.tickets = await (await fetch('/api/ticketTypes')).json();
+    })();
+  }, []);
+
+
+
+
 
 
   return <>

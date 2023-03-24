@@ -1,5 +1,4 @@
 
-import { useState, useEffect } from "react"
 import { NavLink } from "react-router-dom"
 import { useStates } from '../utilities/states'
 import { getDuration } from "../utilities/duration"
@@ -11,40 +10,26 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 
-// import CategoryFilter from '../components/CategoryFilter';
-
-
 export default function Movies() {
 
   const s = useStates("screenings")
-
-  const [movieCategories, setMovieCategories] = useState([])
-  const [catFilter, setCatFilter] = useState("All Categories")
-
-  useEffect(() => {
-    (async () => {
-      setMovieCategories(await (await (fetch("/api/categories"))).json())
-    })();
-  }, []);
-
+  const c = useStates("movieCategories")
 
   const handleCategoryChange = (event) => {
-    setCatFilter(event.target.value)
+    c.catFilter = event.target.value
   }
 
 
   //////////////////////////////
   // Categories
-
   function getAllCategories() {
-    let allCat = movieCategories.map(cat => cat.title)
+    let allCat = c.movieCategories.map(cat => cat.title)
     allCat.sort()
     allCat.unshift("All Categories")
     return allCat
   }
 
-  //////////////////////////////
-  // movies and category filter
+
 
   return <>
     <h2 className="p2 mb-3">Movies In Cinema Now</h2>
@@ -54,7 +39,7 @@ export default function Movies() {
     <Container className="mb-4">
       <Row >
         <Col sm={4}>
-          <Form.Select aria-label="Default select example" onChange={handleCategoryChange} >
+          <Form.Select value={c.catFilter} aria-label="Default select example" onChange={handleCategoryChange} >
             {getAllCategories().map(cat =>
               <option key={cat}>{cat}</option>
             )}
@@ -67,7 +52,7 @@ export default function Movies() {
 
     {/* Card component */}
     {s.screenings.filter(({ categories }) => (
-      catFilter === "All Categories" || categories.includes(catFilter)
+      c.catFilter === "All Categories" || categories.includes(c.catFilter)
     )).map(({ id, movieId, time, movieTitle, movieDuration, categories, moviePoster, slug }) =>
 
       <NavLink key={id} to={'/movie-details/' + slug + "/" + id} >
