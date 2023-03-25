@@ -1,9 +1,8 @@
 
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useStates } from '../utilities/states';
 import { getDuration } from "../utilities/duration"
-import { useEffect } from 'react'
-
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -11,32 +10,33 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card'
 
 import DisplaySeats from '../components/DisplaySeats'
-import ChooseTickets from '../components/ChooseTickets'
-
+import ChooseTickets from "../components/ChooseTickets";
 
 
 export default function MovieDetails() {
 
-  const { slug } = useParams()
+
   const s = useStates("screenings")
+
+  const { slug, id } = useParams()
   const screening = s.screenings.find(mov => mov.slug == slug)
+
+
   if (!screening) {
     return null
   }
 
-
-
-  /// fetch stuff here - so we can pass it around among components
   const ms = useStates("oneMovie", {
-    movieScreening: null,
+    movieScreening: {},
     seats: [],
     emptySeats: 0
   });
 
+
   useEffect(() => {
     (async () => {
       let movieScreening = (await (await fetch(
-        `/api/occupied_seats?screeningId=${screening.id}`))
+        `/api/occupied_seats?screeningId=${id}`)) //screeningId
         .json())[0]
 
       movieScreening.occupiedSeats = movieScreening
@@ -45,12 +45,14 @@ export default function MovieDetails() {
 
       ms.movieScreening = movieScreening
 
-      // empty number of seats
-      ms.emptySeats = movieScreening.total - movieScreening.occupied
-      // console.log("Empty: ", ms.emptySeats, " total :", movieScreening.total, " occupied", movieScreening.occupied)
+      // // empty number of seats
+      ms.emptySeats = (movieScreening.total - movieScreening.occupied)
+
+      let auditoriumId = ['Stora Salongen', 'Lilla Salongen']
+        .indexOf(ms.movieScreening.auditorium) + 1;
 
       let seats = await (await fetch(
-        `/api/seats/?auditoriumId=${screening.auditoriumId}&sort=seatNumber`)).json()
+        `/api/seats/?auditoriumId=${auditoriumId}&sort=seatNumber`)).json()
 
       let rows = [];
       let row;
@@ -70,7 +72,6 @@ export default function MovieDetails() {
       ms.seats = rows
     })()
   }, [])
-
 
 
 
@@ -98,15 +99,15 @@ export default function MovieDetails() {
       <hr />
 
       <Row>
-        <ChooseTickets />
-      </Row>
-
+        <ChooseTickets seats={ms.emptySeats} />
+      </Row >
 
       <Row>
         <DisplaySeats />
-        {/* <Booking /> */}
       </Row>
-    </Container>
 
+
+
+    </Container>
   </>
 }
