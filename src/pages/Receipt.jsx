@@ -1,15 +1,12 @@
 import { useStates } from '../utilities/states';
-
+import { NavLink } from "react-router-dom"
+import Button from 'react-bootstrap/Button';
 
 export default function Receipt() {
 
-  // const t = useStates("tickets")
   const ms = useStates("oneMovie")
   const tt = useStates('ticketTypes')
-  const sel = useStates('selectedSeats')
 
-  // console.log(ms)
-  // console.log(ms)
 
   function generateBookingNumber() {
     let no = '';
@@ -24,39 +21,48 @@ export default function Receipt() {
 
   return <>
     <p className="mb-5">Your Receipt:</p>
-    <h2>Movie: {ms.movieScreening.movie} </h2>
-    <p>{
-      new Intl.DateTimeFormat('en-SE', {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-      }).format(new Date(ms.movieScreening.screeningTime))
-    }</p>
+    <div className="px-5">
 
-    <p>Price: {tt.totalSEK} SEK </p>
+      <h2>Movie: {ms.movieScreening.movie} </h2>
+      <p>{
+        new Intl.DateTimeFormat('en-SE', {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+        }).format(new Date(ms.movieScreening.screeningTime))
+      }</p>
 
-    <p>Booking number: {generateBookingNumber()}</p>
+      <p>Price: {tt.totalSEK} SEK </p>
+
+      <p>Booking number: {generateBookingNumber()}</p>
 
 
-    <p>Your Seats:</p>
-    {ms.seats.map(row => {
-      return row.map(seat => {
-        if (seat.selected) {
-          return <p>Row {seat.rowNumber}, Seat {seat.seatNumber}</p>;
-        } else {
-          return null;
-        }
-      });
-    })}
+      <p>Your Seats:</p>
+      {ms.seats.map(row => {
+        return row.map(seat => {
+          if (seat.selected) {
+            return <p>Row {seat.rowNumber}, Seat {seat.seatNumber}</p>;
+          } else {
+            return null;
+          }
+        });
+      })}
+    </div>
+
 
     <p className="mt-5">Thank you for choosing Feature Flicks!</p>
     <p><small>Please check your inbox for a confirmation email and confirm the booking!</small></p>
     <p className="mb-3"><small>Show booking number and pay at the counter!</small></p>
 
+    <NavLink to={'/movieS/'} >
 
+      <Button className="mt-3 mb-3" variant="outline-primary" type="submit">
+        Check out other Movies
+      </Button>
+    </NavLink>
 
   </>
 

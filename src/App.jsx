@@ -51,7 +51,6 @@ export default function App() {
 
   ///////////////////////////////////
   // Fetching movie categories
-
   const c = useStates('movieCategories', {
     movieCategories: [],
     catFilter: "All Categories"
@@ -67,7 +66,6 @@ export default function App() {
 
   ///////////////////////////////////
   // Fetching tickets types
-
   const t = useStates('tickets', {
     tickets: []
   })

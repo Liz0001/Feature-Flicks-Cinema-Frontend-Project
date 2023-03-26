@@ -15,7 +15,6 @@ import ChooseTickets from "../components/ChooseTickets";
 
 export default function MovieDetails() {
 
-
   const s = useStates("screenings")
 
   const { slug, id } = useParams()

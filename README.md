@@ -1,11 +1,39 @@
-# ASSIGNMENT 1 - Feature Flicks - The Cinema
+# ASSIGNMENT 2 - Feature Flicks - The Cinema
 
 - Using React with HTML/jsx, CSS, Bootstrap, JavaScript and consumtion of data from a ready-made REST-api to build a small web site.
-- Writing about the web technologies you use, as part of the content on the site.
 
-### ------ NEED to add smtg!!!
 
-Assignment:
+
+
+## Components and their purpose
+
+The project has been divided into the following sections/components:
+
+#### Main/start component:
+- App component - Where it all starts. App holds the stucture of the site, with header and the `<HeaderMenu/>` component in it, main area that holds all the Routes, and finally footer with `<Footer/>` component.
+In the App compunent there is data fetched, Screenings and Movies(and combined), alfo fetching categories and tickets. 
+
+#### Bigger components, containing with more mixed content/logic:
+- Movies - movies/screenings and categories fetched in the App are being used here. Displayed by screening date, but it is possible to see them by category , if clicked on a particular movie the user is taken to a detailed movie page.
+- MovieDetails - Movie details sows into about the particular movie the user has opened that we get from `useParams()`> Here we have another 2 coponents aside from the movie details, which are `<DisplaySeats/>` and `<ChooseTickets/>`.
+- Receipt - final place the user arrives after uccessfully booking the movie screening at Feature flicks Cinema, here the user receives a booking number with all the necessary details about the movie they have chosen to book
+- Page404 - renders when page was not found
+
+
+#### Particular components:
+- HeaderMenu - react-bootstrap header
+- Footer - simple sticky header
+- ChooseTickets - The user can choose as many seats as there are available spots for that particular screening
+- DisplaySeats - user can choose as many seats as there are available
+- Booking - If the user has chosen tickets and selected seats, and seats == tickets, also whenthe user has entered an email, they will be redirected to a `<Receipt/>`
+
+#### Extra component:
+
+- StartPage - Just a filler for the page, to add body, has lorem ipsum content
+- Contact -  Same here, it is just a filler page
+
+
+### Assignment:
 ==========
 
 <strong>Feature Flicks</strong> is a small cinema that wants to start competing locally with SF. They have two auditoriums “Lilla Salen” and “Stora Salen” and are located in Småstad in Sweden.
@@ -32,8 +60,13 @@ A finished backend with a REST-api and a MySQL has already been provided by anot
 
 You should integrate the backend in your code! (It’s here - link to come.)
 
-The frontend should be built with:
-- React
-- React Router
-- React Bootstrap - grade 5
-- You can choose Swedish or English as the site language, but choose ONE (don’t mix them).
+- More about the assignment:
+https://da218.lms.nodehill.se/article/assignment-2-of-2-feature-flicks-the-cinema
+
+
+
+
+##### Known Bugs
+    -   Occasionally crashes on hard reload when on movie details page - Change in hooks issue ...
+
+

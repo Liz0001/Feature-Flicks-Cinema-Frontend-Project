@@ -29,8 +29,6 @@ export default function Contact() {
         Send
       </Button>
     </Form>
-
-
   </>
 
 }

@@ -23,8 +23,3 @@ dist-ssr
 *.sln
 *.sw?
 
-
-/////
-src/components/CardPoster.jsx
-src/components/CategoryFilter.jsx
-

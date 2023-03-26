@@ -27,10 +27,9 @@ img.logo {
 /// Movie Card
 .movCard .row {
   margin: 0;
-  max-height: 400px;
+  // max-height: 400px;
 }
 
-// .detail-img-card,
 .img-card {
   width: 100%;
   height: 100%;
@@ -64,7 +63,6 @@ a {
 ///////////////////////////
 /// Movie Card on movie details page
 .detail-img-card {
-  // max-height: 500px;
   height: 100%;
   width: 75%;
   object-fit: cover;
@@ -83,7 +81,6 @@ a {
 
 .seats {
   text-align: center;
-  // margin-right: 7px;
 }
 
 .seats>.row {
@@ -92,7 +89,6 @@ a {
 
 
 .seats>.row>div {
-  // background-color: burlywood;
   border: #72b457 1px solid;
 }
 
@@ -100,10 +96,7 @@ a {
   background-color: white;
   color: black;
   float: right;
-  // text-align: center;
   padding-top: 3px;
-  // padding-bottom: 3px;
-  // padding-right: 5px;
   border-top-left-radius: 25%;
   border-top-right-radius: 25%;
   width: 50px;
@@ -146,7 +139,6 @@ a {
 }
 
 .printText {
-  // margin-top: -20px;
   display: inline-block;
   padding-right: 150px;
 }
@@ -154,7 +146,6 @@ a {
 
 p.ticketArea:first-child,
 p.ticketArea:nth-child(4) {
-  // background: red;
   margin-bottom: 0;
 }
 
@@ -169,36 +160,150 @@ p.ticketArea:nth-child(4) {
 
 ////////////////////////////
 /// HOME
+/// 
+/// 
+
 main .frontPage {
 
 
   background-image: url("/public/mov.jpg");
   border-radius: 10px;
   color: white;
-  text-shadow: 5px 5px 5px #00000067;
+  text-shadow: 5px 5px 5px #00000077;
   max-height: 75vh;
   width: 100%;
   object-fit: cover;
   aspect-ratio: 1 / 1;
   margin-top: 50px;
-  // background-repeat: no-repeat;
-  // // background-attachment: fixed;
   background-position: 65%;
-  // position: relative;
 
 }
 
 main .innerFront {
-
-  text-align: center;
   border-radius: 10px;
-  // width: 100%;
-  // height: 100%;
-  background-color: rgba(103, 109, 85, 0.61);
-  ;
+  background-color: rgba(103, 109, 85, 0.11);
+}
 
-  // position: absolute;
-  // top: 10%;
-  // bottom: 10%;
-  // margin: auto;
+
+.innerFront h2 {
+  color: #3b4129c9;
+}
+
+
+
+
+
+/////////////////////////////////////
+/// Media screens
+@media only screen and (max-width: 767px) {
+
+
+  .seats>.row>div {
+    font-size: 18px;
+    padding-top: 0px;
+    padding-left: 4px;
+    width: 30px;
+    height: 30px;
+    margin: 2px 1px;
+  }
+
+  // first line only
+  .seats>.row:first-child>div {
+    padding-left: 8px;
+  }
+}
+
+@media only screen and (max-width: 410px) {
+
+
+
+  main .container .frontPage {
+    margin-top: 0 !important;
+  }
+
+  img.logo {
+    display: none;
+  }
+
+  .frontPage {
+    padding: 20px !important;
+  }
+
+  .innerFront {
+    padding: 20px !important;
+  }
+
+  .container {
+    overflow-x: hidden;
+  }
+
+  .seats .row {
+    display: flex;
+    justify-content: center;
+    flex-direction: row-reverse;
+    // background-color: red;
+  }
+
+  .seats {
+    overflow-y: hidden;
+    padding: 10px;
+    background-color: rgba(103, 109, 85, 0.11);
+  }
+
+  .seats>.row {
+
+    width: 420px;
+    margin-bottom: -15px;
+  }
+
+  .seats>.row>div {
+    font-size: 18px;
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+
+  body {
+    font-size: 1.1rem;
+  }
+
+  .logo-text {
+    font-size: 23px;
+  }
+
+  main .container .frontPage {
+    margin-top: 0 !important;
+  }
+
+  .ticketArea .priceArea {
+    margin-left: -3px;
+  }
+
+  .btnAreaAdult {
+    margin-left: 0px;
+  }
+
+  .btnAreaChild {
+    margin-left: 0px;
+  }
+
+  .ticketArea button {
+    margin: 0 5px;
+  }
+}
+
+@media only screen and (max-width: 290px) {
+
+  button {
+    font-size: 18px !important;
+  }
+
+  body {
+    font-size: 1rem;
+  }
+
+  .logo-text {
+    font-size: 20px;
+  }
 }

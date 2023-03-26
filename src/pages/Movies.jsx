@@ -34,23 +34,20 @@ export default function Movies() {
   return <>
     <h2 className="p2 mb-3">Movies In Cinema Now</h2>
 
-    {/* Filter Component */}
-    {/* <CategoryFilter /> */}
     <Container className="mb-4">
       <Row >
-        <Col sm={4}>
+        <Col md={4}>
           <Form.Select value={c.catFilter} aria-label="Default select example" onChange={handleCategoryChange} >
             {getAllCategories().map(cat =>
               <option key={cat}>{cat}</option>
             )}
           </Form.Select>
         </Col>
-        <Col m={8}></Col>
+        <Col md={8}></Col>
       </Row>
     </Container>
 
 
-    {/* Card component */}
     {s.screenings.filter(({ categories }) => (
       c.catFilter === "All Categories" || categories.includes(c.catFilter)
     )).map(({ id, movieId, time, movieTitle, movieDuration, categories, moviePoster, slug }) =>
@@ -63,7 +60,7 @@ export default function Movies() {
               <Col className="cardImageCol" md={4}>
                 <Card.Img className="img-card" variant="top" src={"https://cinema-rest.nodehill.se/" + moviePoster} alt={movieTitle} />
               </Col>
-              <Col mds={8}>
+              <Col md={8}>
 
                 <Card.Body className="body-card">
                   <Card.Text>

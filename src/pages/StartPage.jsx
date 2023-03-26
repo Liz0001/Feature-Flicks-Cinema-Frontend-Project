@@ -14,7 +14,7 @@ export default function StartPage() {
 
       <NavLink to={'/movieS/'} >
 
-        <Button className="mt-5 m-3 px-4 py-2" variant="secondary" type="submit">
+        <Button className="mt-5 m-3 px-4 py-2" variant="outline-primary" type="submit">
           Go to Movies
         </Button>
       </NavLink>
