@@ -57,7 +57,7 @@ export default function Receipt() {
     <p><small>Please check your inbox for a confirmation email and confirm the booking!</small></p>
     <p className="mb-3"><small>Show booking number and pay at the counter!</small></p>
 
-    <NavLink to={'/movieS/'} >
+    <NavLink to={'/movies/'} >
 
       <Button className="mt-3 mb-3" variant="outline-primary" type="submit">
         Check out other Movies
