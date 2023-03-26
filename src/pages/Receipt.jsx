@@ -55,6 +55,9 @@ export default function Receipt() {
     <p className="mt-5">Thank you for choosing Feature Flicks!</p>
     <p><small>Please check your inbox for a confirmation email and confirm the booking!</small></p>
     <p className="mb-3"><small>Show booking number and pay at the counter!</small></p>
+
+
+
   </>
 
 }
